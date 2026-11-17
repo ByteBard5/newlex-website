@@ -28,12 +28,16 @@ export default function SplitText({ text, delay = 0, stagger = 0.05, onLoad = fa
     >
       {words.map((word, i) => (
         <span key={i} aria-hidden>
-          <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom">
+          {/* The mask that hides each word before it slides up. It is padded on every side (and pulled back
+              with matching negative margins so spacing is unchanged) because a tight mask cut off the parts
+              of letters that reach past the line box: the tail of "g"/"y" and the right curve of "o". */}
+          <span className="-mx-[0.1em] -mb-[0.28em] -mt-[0.08em] inline-block overflow-hidden px-[0.1em] pb-[0.28em] pt-[0.08em] align-bottom">
             {/* whitespace-pre keeps the space after each word (it would vanish inside an inline-block) */}
             <motion.span
               className={`inline-block whitespace-pre will-change-transform ${wordClassName}`}
               variants={{
-                hidden: { y: "105%" },
+                // 140% (not 105%) so the word starts fully below the taller, padded mask
+                hidden: { y: "140%" },
                 show: { y: "0%", transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },
               }}
             >
