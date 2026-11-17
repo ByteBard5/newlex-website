@@ -24,10 +24,15 @@ export const site = {
   location: "India · Working worldwide",
   availability: "Open for new projects",
 
+  // Social links — shown as icons at the very bottom of the footer and as links on the Contact page.
+  // Replace each href with your own profile link (e.g. "https://www.instagram.com/newlexdesigns/").
+  // Icons exist for: Instagram, Behance, LinkedIn, Pinterest, Facebook. Delete a line to hide it.
   socials: [
     { label: "Instagram", href: "https://www.instagram.com/" },
     { label: "Behance", href: "https://www.behance.net/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "Pinterest", href: "https://www.pinterest.com/" },
+    { label: "Facebook", href: "https://www.facebook.com/" },
   ],
 
   // How many projects to show

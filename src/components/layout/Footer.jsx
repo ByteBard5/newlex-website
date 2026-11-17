@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/config/site";
 import { services } from "@/content/services";
+import SocialIcon from "@/components/ui/SocialIcon";
 
 // Shown at the bottom of every page.
 export default function Footer() {
@@ -65,22 +66,30 @@ export default function Footer() {
               )}
               <li>{site.location}</li>
             </ul>
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-              {site.socials.map((s) => (
-                <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noreferrer" className="text-white transition-colors hover:text-yellow">
-                    {s.label} ↗
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-2 border-t border-white/10 py-8 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
+        {/* Very bottom: copyright, social icons (from site.socials), tagline */}
+        <div className="mt-16 flex flex-col gap-5 border-t border-white/10 py-8 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {site.name}. All rights reserved.
           </p>
+          <ul className="flex flex-wrap gap-2" aria-label="Social media">
+            {site.socials.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  title={s.label}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-white/15 text-white transition-colors hover:border-yellow hover:bg-yellow hover:text-black"
+                >
+                  <SocialIcon label={s.label} />
+                </a>
+              </li>
+            ))}
+          </ul>
           <p className="type-eyebrow text-[0.65rem]">{site.tagline}</p>
         </div>
       </div>
