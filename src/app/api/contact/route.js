@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { site } from "@/config/site";
+import { createMailer, getMailConfig } from "@/lib/mailer.mjs";
 
 /*
   Contact form endpoint — emails every enquiry to the studio.
 
-  Uses Gmail with an App Password. Set these in .env.local (on your computer)
-  and in Vercel → Project → Settings → Environment Variables:
+  Uses Gmail with an App Password. To connect it, fill in .env.local (on your computer)
+  and the same values in Vercel → Project → Settings → Environment Variables:
     SMTP_USER         the Gmail address that sends the email
-    SMTP_PASS         the 16-character Gmail App Password
+    SMTP_PASS         the 16-character Gmail App Password (spaces are fine)
     CONTACT_TO_EMAIL  where enquiries should arrive (defaults to SMTP_USER)
-    SMTP_HOST / SMTP_PORT  optional, default smtp.gmail.com / 465
+  Then run `npm run check-email` to test the connection. Settings live in src/lib/mailer.mjs.
+  Until it is connected, the live site asks visitors to use email or WhatsApp instead.
 */
 export const runtime = "nodejs";
 
@@ -41,15 +43,15 @@ export async function POST(request) {
     return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
 
-  const { SMTP_USER, SMTP_PASS, CONTACT_TO_EMAIL, SMTP_HOST = "smtp.gmail.com", SMTP_PORT = "465" } = process.env;
+  const mail = getMailConfig();
 
-  if (!SMTP_USER || !SMTP_PASS) {
+  if (!mail.ready) {
     if (process.env.NODE_ENV === "development") {
-      console.log("[contact] Email not configured yet — message received:", data);
+      console.log("[contact] Email not connected yet (fill in .env.local) — message received:", data);
       return NextResponse.json({ ok: true, dev: true });
     }
     console.error("[contact] SMTP_USER / SMTP_PASS are not set.");
-    return NextResponse.json({ error: "The contact form isn't connected yet." }, { status: 503 });
+    return NextResponse.json({ error: "Our contact form is being set up." }, { status: 503 });
   }
 
   const rows = [
@@ -83,16 +85,9 @@ export async function POST(request) {
   </div>`;
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: Number(SMTP_PORT),
-      secure: Number(SMTP_PORT) === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
-
-    await transporter.sendMail({
-      from: `"Newlex Designs Website" <${SMTP_USER}>`,
-      to: CONTACT_TO_EMAIL || SMTP_USER,
+    await createMailer(mail).sendMail({
+      from: `"${site.name} Website" <${mail.user}>`,
+      to: mail.to,
       replyTo: { name: oneLine(data.name), address: data.email },
       subject: oneLine(`New enquiry: ${data.name}${data.service ? ` — ${data.service}` : ""}`),
       text,

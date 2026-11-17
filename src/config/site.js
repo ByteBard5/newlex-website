@@ -15,6 +15,12 @@ export const site = {
   // Public contact details shown on the website
   email: "hello@newlexdesigns.com",
   phone: "",
+
+  // WhatsApp chat button (bottom-right of every page) and the contact page.
+  // Country code + number, digits only (91 = India). Leave "" to hide the button.
+  whatsapp: "917906052779",
+  // Text already typed in the chat when a visitor taps the button (they can change it before sending)
+  whatsappMessage: "Hi Newlex Designs, I'd like to talk about a project.",
   location: "India · Working worldwide",
   availability: "Open for new projects",
 
@@ -36,3 +42,8 @@ export const site = {
     { label: "Contact", href: "/contact" },
   ],
 };
+
+// Link that opens a WhatsApp chat with the studio (used by the floating button and the contact page)
+export const whatsappHref = site.whatsapp
+  ? `https://wa.me/${site.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(site.whatsappMessage || "")}`
+  : "";

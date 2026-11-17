@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { services } from "@/content/services";
-import { site } from "@/config/site";
+import { site, whatsappHref } from "@/config/site";
 import Button from "@/components/ui/Button";
 
 /*
@@ -128,6 +128,14 @@ export default function ContactForm() {
                 <a href={`mailto:${site.email}`} className="font-semibold underline">
                   {site.email}
                 </a>
+                {whatsappHref && (
+                  <>
+                    {" "}or{" "}
+                    <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+                      message us on WhatsApp
+                    </a>
+                  </>
+                )}
                 .
               </p>
             )}

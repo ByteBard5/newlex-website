@@ -88,7 +88,8 @@ Text styles in `globals.css`: `type-display`, `type-h1`, `type-h2`, `type-h3`, `
 | Add / change a team member              | `src/content/team.js` + photo in `public/team/`                |
 | Add a project                           | Pictures in `public/projects/<name>/`, then copy `src/content/projects/_template.js` (see the README there) |
 | Add a picture to a service              | Picture in `public/services/`, then set `image` in `src/content/services.js` |
-| Change email, phone, social links       | `src/config/site.js`                                           |
+| Change email, phone, WhatsApp, social links | `src/config/site.js`                                       |
+| Connect the contact form email          | `.env.local` (see "Contact form" below), then `npm run check-email` |
 | Change colours                          | Top of `src/app/globals.css`                                   |
 | Edit a section                          | The matching file in `src/sections/<page>/`                    |
 | Re-order or remove sections             | The page file in `src/app/…/page.jsx`                          |
@@ -124,12 +125,27 @@ the photo turns black & white.
 
 ## Contact form (email)
 
-Enquiries are emailed using Gmail and an **App Password**:
+Enquiries are emailed through Gmail using an **App Password**. Everything is already built;
+only the password needs adding:
 
-1. Copy `.env.example` to `.env.local` and fill in `SMTP_USER`, `SMTP_PASS` and `CONTACT_TO_EMAIL`.
-2. Add the same three values in **Vercel → Project → Settings → Environment Variables**.
+1. In the Gmail account that will send the emails, turn on **2-Step Verification**, then create an
+   **App Password** at myaccount.google.com/apppasswords (name it "Website"). Copy the 16 letters.
+2. Open **`.env.local`** in the project folder and fill in `SMTP_USER` (the Gmail address),
+   `SMTP_PASS` (the App Password; spaces are fine) and `CONTACT_TO_EMAIL` (where enquiries should
+   arrive). Save. The full steps are written at the top of `.env.example`.
+3. Test it: `npm run check-email` (or `npm run check-email -- --send` to also send a test email).
+4. For the live site, add the same three values in **Vercel → Project → Settings → Environment
+   Variables** and redeploy.
 
-Until these are set, form submissions are only printed in the terminal while running locally.
+`.env.local` stays on your computer and is never uploaded to GitHub. Until the email is connected,
+form messages are printed in the terminal while running locally, and the live site asks visitors to
+email or WhatsApp instead.
+
+## WhatsApp button
+
+The green chat button (bottom-right of every page) and the WhatsApp line on the Contact page use
+`whatsapp` and `whatsappMessage` in `src/config/site.js`. Number = country code + number, digits only
+(e.g. `917906052779`). Set it to `""` to hide the button.
 
 ## Deploy to Vercel
 

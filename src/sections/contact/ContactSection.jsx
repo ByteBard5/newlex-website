@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { site } from "@/config/site";
+import { site, whatsappHref } from "@/config/site";
 import Reveal from "@/components/ui/Reveal";
 import ContactForm from "./ContactForm";
 
@@ -8,6 +8,7 @@ export default function ContactSection() {
   const details = [
     { label: "Email", value: site.email, href: `mailto:${site.email}` },
     site.phone && { label: "Phone", value: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
+    whatsappHref && { label: "WhatsApp", value: "Chat with us on WhatsApp", href: whatsappHref, external: true },
     { label: "Studio", value: site.location },
     { label: "Availability", value: site.availability },
   ].filter(Boolean);
@@ -21,7 +22,7 @@ export default function ContactSection() {
               <dt className="type-eyebrow text-[0.62rem] text-gray/60">{d.label}</dt>
               <dd className="mt-2 text-lg font-semibold text-black">
                 {d.href ? (
-                  <a href={d.href} className="underline decoration-transparent decoration-2 underline-offset-4 transition-colors hover:decoration-yellow">
+                  <a href={d.href} {...(d.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="underline decoration-transparent decoration-2 underline-offset-4 transition-colors hover:decoration-yellow">
                     {d.value}
                   </a>
                 ) : (

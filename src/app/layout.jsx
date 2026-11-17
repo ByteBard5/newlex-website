@@ -8,6 +8,7 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 import CursorLabel from "@/components/layout/CursorLabel";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 // Manrope — headings (bold and modern)
 const manrope = Manrope({
@@ -63,6 +64,7 @@ export default function RootLayout({ children }) {
             <div aria-hidden className="h-[72px] md:h-20" />
             <main>{children}</main>
             <Footer />
+            <WhatsAppButton />
           </SmoothScroll>
         </LoaderProvider>
       </body>
