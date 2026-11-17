@@ -1,64 +1,52 @@
 "use client";
 
-import Link from "next/link";
 import Image from "@/components/ui/SmartImage";
 import { motion } from "motion/react";
 import { useLoaded } from "@/components/layout/LoaderProvider";
-import SplitText from "@/components/ui/SplitText";
+import { categoryLabel } from "@/lib/projects";
 
-// PROJECT › HEADER — title, intro, project details and the thumbnail.
+/*
+  PROJECT › HEADER
+  Centred title block (title + optional year, optional services line, category),
+  then the cover picture across the full width of the screen.
+  Structure follows the reference project page the owner chose (studiosixf.com/portfolio/…).
+  Fields: title, year, services, category, thumbnail (src/content/projects/<project>.js).
+*/
 export default function ProjectHeader({ project }) {
   const loaded = useLoaded();
   const fade = (delay) => ({
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 16 },
     animate: loaded ? { opacity: 1, y: 0 } : {},
-    transition: { duration: 1, delay, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] },
   });
 
-  const details = [
-    ["Category", project.category],
-    ["Project Type", project.projectType],
-    ["Role", project.role],
-    ["Software", project.software.join(", ")],
-    ["Resolution", project.resolution],
-    ["Format", project.format],
-  ].filter(([, v]) => v);
-
   return (
-    <section className="container-x pt-12 md:pt-20">
-      <motion.nav {...fade(0)} aria-label="Breadcrumb" className="type-eyebrow flex items-center gap-3 text-gray/70">
-        <Link href="/portfolio" className="transition-colors hover:text-black">
-          Portfolio
-        </Link>
-        <span>/</span>
-        <span className="text-black">{project.category}</span>
-      </motion.nav>
-
-      <h1 className="type-h1 mt-8 max-w-5xl">
-        <SplitText text={project.title} onLoad />
-      </h1>
-
-      <div className="mt-10 grid gap-10 md:mt-14 lg:grid-cols-12">
-        <motion.p {...fade(0.35)} className="type-lead text-gray lg:col-span-6">
-          {project.shortDescription}
-        </motion.p>
-        <motion.dl {...fade(0.5)} className="grid grid-cols-2 gap-x-8 gap-y-6 border-t border-black/10 pt-8 sm:grid-cols-3 lg:col-span-5 lg:col-start-8 lg:border-t-0 lg:pt-1">
-          {details.map(([k, v]) => (
-            <div key={k}>
-              <dt className="type-eyebrow text-[0.62rem] text-gray/60">{k}</dt>
-              <dd className="mt-1.5 text-sm font-semibold text-black">{v}</dd>
-            </div>
-          ))}
-        </motion.dl>
+    <section className="bg-black text-white">
+      <div className="container-x pb-12 pt-14 text-center md:pb-16 md:pt-20">
+        <motion.h1 {...fade(0)} className="font-display text-[clamp(1.9rem,3.2vw,2.6rem)] font-extrabold leading-tight tracking-[-0.02em] text-white">
+          {project.title}
+          {project.year && <span className="ml-3 align-middle text-base font-medium tracking-normal text-white/50">{project.year}</span>}
+        </motion.h1>
+        {project.services.length > 0 && (
+          <motion.p {...fade(0.1)} className="mx-auto mt-5 max-w-2xl text-base font-light text-white/85">
+            {project.services.join(", ")}
+          </motion.p>
+        )}
+        {project.category && (
+          <motion.div {...fade(0.2)} className="mt-8">
+            <p className="text-base text-white/45 md:text-lg">Category</p>
+            <p className="mt-1 text-base text-white md:text-lg">{categoryLabel(project.category)}</p>
+          </motion.div>
+        )}
       </div>
 
       <motion.div
-        initial={{ clipPath: "inset(8% 6% 8% 6% round 28px)", opacity: 0 }}
-        animate={loaded ? { clipPath: "inset(0% 0% 0% 0% round 28px)", opacity: 1 } : {}}
-        transition={{ duration: 1.3, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="relative mt-14 aspect-[16/9] overflow-hidden rounded-[28px] bg-soft md:mt-20"
+        initial={{ opacity: 0 }}
+        animate={loaded ? { opacity: 1 } : {}}
+        transition={{ duration: 1, delay: 0.25 }}
+        className="relative h-[60vw] max-h-[100svh] min-h-[320px] w-full overflow-hidden bg-white/5 md:h-[62.5vw]"
       >
-        <Image src={project.thumbnail} alt={project.title} fill priority sizes="(min-width: 1360px) 1250px, 100vw" className="object-cover" />
+        <Image src={project.thumbnail} alt={project.title} fill priority sizes="100vw" className="object-cover" />
       </motion.div>
     </section>
   );

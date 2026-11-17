@@ -53,6 +53,8 @@ function normalize(p, i) {
     thumbnail: safeUrl(p.thumbnail),
     gallery: (p.gallery || []).map(safeUrl),
     software: p.software || [],
+    services: p.services || [],
+    credits: p.credits || [],
     results,
   };
 }
@@ -68,9 +70,21 @@ export function getNextProject(id) {
   return ALL[(i + 1) % ALL.length];
 }
 
+export function getPrevProject(id) {
+  const i = ALL.findIndex((p) => p.id === id);
+  return ALL[(i - 1 + ALL.length) % ALL.length];
+}
+
 export const getCategories = () => [...new Set(ALL.map((p) => p.category).filter(Boolean))];
 
 export const getProjectsByCategory = (category) => ALL.filter((p) => p.category === String(category).toUpperCase());
 
 // The first project that has a video — used for the showreel on the Home page.
 export const getShowreelProject = () => ALL.find((p) => p.results.some((r) => r.type === "video" && (r.ratio ?? 1) >= 1)) ?? null;
+
+// "SOCIAL MEDIA" -> "Social Media", "CGI & 3D" -> "CGI & 3D" (short all-caps words and words with digits stay as they are)
+export const categoryLabel = (c) =>
+  String(c || "")
+    .split(" ")
+    .map((w) => (/\d/.test(w) || (w.length <= 3 && /^[A-Z]+$/.test(w)) ? w : w.charAt(0) + w.slice(1).toLowerCase()))
+    .join(" ");

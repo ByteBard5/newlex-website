@@ -28,8 +28,11 @@ The project then appears:
 | `thumbnail`        | Cover image. The Portfolio page crops it to 4:5 or 5:4, so keep the subject centred |
 | `description`      | Optional — "Overview" section. Delete the line to hide the section           |
 | `gallery`          | Optional — list of image links. Delete to hide the section                   |
-| `projectType`, `software`, `resolution`, `format`, `role` | Shown in the project details panel    |
-| `results`          | The final work. Images need `aspectRatio` (e.g. `"4/5"`) or `orientation: "landscape"`. Videos need `type: "video"` and an `aspectRatio` (`"16/9"` or `"9/16"`) |
+| `year`, `services`                  | Optional — shown in the title block of the project page            |
+| `client`, `challenge`, `solution`   | Optional — tabs next to the intro on the project page (`description` is the "Overview" tab) |
+| `credits`                           | Optional — centred lines under the pictures (otherwise role, software, format, resolution are shown) |
+| `projectType`, `software`, `resolution`, `format`, `role` | Project details |
+| `results`          | The final work, one picture or video per screen. Images need `aspectRatio` (e.g. `"4/5"`) or `orientation: "landscape"`. Videos need `type: "video"` and an `aspectRatio` (`"16/9"` or `"9/16"`) |
 
 ## Remove or hide a project
 

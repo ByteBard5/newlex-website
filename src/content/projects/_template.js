@@ -25,6 +25,14 @@ const projectData = {
   category: "SOCIAL MEDIA",
   shortDescription: "One or two sentences about the project.",
 
+  // Optional extras for the project page — delete any you don't need
+  year: "2026", // shown next to the title
+  services: ["Brand Identity", "Packaging Design"], // line under the title
+  client: "Who the client is and what they do.", // tab "Client"
+  challenge: "What problem the project had to solve.", // tab "Challenges"
+  solution: "How the design solved it.", // tab "Solution"
+  credits: ["Creative Director: Name", "Designer: Name"], // centred lines under the pictures
+
   thumbnail: `${FOLDER}/thumbnail.jpg`, // cover picture; keep the subject in the centre
 
   // Optional — delete these two if the project doesn't have them
@@ -37,7 +45,8 @@ const projectData = {
   format: "PNG",
   role: "Visual Designer",
 
-  // Final work. Pictures: aspectRatio "4/5" for tall ones, or orientation: "landscape" for wide ones.
+  // Final work — each picture or video fills one screen on the project page, in this order.
+  // Pictures: aspectRatio "4/5" for tall ones, or orientation: "landscape" for wide ones.
   // Videos: type "video" with aspectRatio "16/9" (wide) or "9/16" (tall).
   results: [
     { type: "image", src: `${FOLDER}/01.jpg`, aspectRatio: "4/5" },

@@ -2,36 +2,27 @@
 
 import { motion } from "motion/react";
 import { useLoaded } from "@/components/layout/LoaderProvider";
-import Eyebrow from "@/components/ui/Eyebrow";
-import SplitText from "@/components/ui/SplitText";
 
 /*
   PORTFOLIO › HERO
-  A small label and one very large two-line statement, with a lot of empty
-  space under it before the work starts. Modelled on the reference work page
-  the owner chose (pinkponycreative.com/work): no intro paragraph, so the
-  projects carry the page. The second line uses the yellow marker, because
-  yellow text is unreadable on the light background.
+  A centred two-line headline on black; the last words are set in italic yellow.
+  Structure follows the reference work page the owner chose (studiosixf.com/our-work).
+  Yellow text is used here only because the background is dark.
 */
 export default function PortfolioHero() {
   const loaded = useLoaded();
   return (
-    <section className="container-x pb-16 pt-16 md:pb-32 md:pt-28">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
+    <section className="bg-black text-white">
+      <motion.h1
+        initial={{ opacity: 0, y: 16 }}
         animate={loaded ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="container-x pb-10 pt-14 text-center font-display text-[clamp(2rem,3.4vw,3rem)] font-bold leading-[1.15] tracking-[-0.02em] text-white md:pb-12 md:pt-20"
       >
-        <Eyebrow line>Our work</Eyebrow>
-      </motion.div>
-      <h1 className="type-display mt-6 md:mt-8">
-        <span className="block">
-          <SplitText text="Ideas we've made" onLoad />
-        </span>
-        <span className="block">
-          <SplitText text="unforgettable." onLoad delay={0.15} wordClassName="mark" />
-        </span>
-      </h1>
+        Ideas from unseen,
+        <br />
+        made <em className="font-sans font-normal italic text-yellow">unforgettable</em>
+      </motion.h1>
     </section>
   );
 }
