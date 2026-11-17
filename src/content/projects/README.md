@@ -1,15 +1,14 @@
 # Projects
 
 Every project is **one `.js` file** in this folder — the same format as the old website.
-Images and videos stay on Cloudflare R2 (`BASE_URL`).
+Pictures can go in `public/projects/<project-name>/` (easiest) or on Cloudflare R2.
 
 ## Add a new project
 
-1. Upload the thumbnail, result images/videos and gallery images to Cloudflare R2.
-2. Copy `_template.js`, rename it (e.g. `nike-campaign.js`) and fill it in.
-3. Save. That's it — the project list is rebuilt automatically every time the
-   site starts (`npm run dev`) or is deployed (`npm run build`).
-   While the dev server is already running, run `npm run projects` once to pick up a new file.
+1. Put the pictures in a new folder, e.g. `public/projects/nike-campaign/`
+   (or upload them to Cloudflare R2 and use the full links).
+2. Copy `_template.js`, rename the copy (e.g. `nike-campaign.js`), set `FOLDER` and fill it in.
+3. Save. That's it — the project list rebuilds itself, even while `npm run dev` is running.
 
 The project then appears:
 

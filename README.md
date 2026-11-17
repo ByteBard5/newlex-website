@@ -52,6 +52,8 @@ src/
 public/brand/                  Logo files (see "Logo" below)
 public/hero/                   Photos for the moving wall on the Home page (01.jpg … 18.jpg)
 public/team/                   Team photos
+public/projects/               Project pictures, one folder per project (or use Cloudflare R2 links)
+public/services/               Square pictures for the Services page (e.g. packaging.jpg)
 scripts/generate-projects.mjs  Builds the project list automatically
 ```
 
@@ -84,7 +86,8 @@ Text styles in `globals.css`: `type-display`, `type-h1`, `type-h2`, `type-h3`, `
 | Change the hero headline / buttons      | `src/content/hero.js`                                          |
 | Make the hero wall move faster / slower | `heroSpeed` in `src/content/hero.js`                           |
 | Add / change a team member              | `src/content/team.js` + photo in `public/team/`                |
-| Add a project                           | Add a file in `src/content/projects/` (see the README there)    |
+| Add a project                           | Pictures in `public/projects/<name>/`, then copy `src/content/projects/_template.js` (see the README there) |
+| Add a picture to a service              | Picture in `public/services/`, then set `image` in `src/content/services.js` |
 | Change email, phone, social links       | `src/config/site.js`                                           |
 | Change colours                          | Top of `src/app/globals.css`                                   |
 | Edit a section                          | The matching file in `src/sections/<page>/`                    |

@@ -19,7 +19,7 @@ export default function ServiceList() {
   return (
     <section className="container-x pb-12 md:pb-20">
       {services.map((s, i) => {
-        const image = s.image ?? getProjectsByCategory(s.category)[0]?.thumbnail;
+        const image = s.image || getProjectsByCategory(s.category)[0]?.thumbnail;
         const number = String(i + 1).padStart(2, "0");
         const flip = i % 2 === 1;
         return (
