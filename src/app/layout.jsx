@@ -32,10 +32,20 @@ export const metadata = {
     template: `%s — ${site.name}`,
   },
   description: site.description,
+  // Link previews on WhatsApp, LinkedIn, Facebook, X etc. The picture itself
+  // comes from src/app/opengraph-image.jsx and is added to every page automatically.
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    siteName: site.name,
+    locale: "en_IN",
     type: "website",
+  },
+  // "summary_large_image" = full-width picture instead of a small square thumbnail
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
   },
 };
 

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { site } from "@/config/site";
 import { getAllProjects, getNextProject, getPrevProject, getProject } from "@/lib/projects";
 import ProjectHeader from "@/sections/project/ProjectHeader";
 import ProjectIntro from "@/sections/project/ProjectIntro";
@@ -21,7 +22,22 @@ export async function generateMetadata({ params }) {
   return {
     title: project.title,
     description: project.shortDescription,
-    openGraph: { images: [project.thumbnail] },
+    // Shared links to a project show its own cover picture, title and description.
+    // (This replaces the site-wide preview, so the title and description are repeated here.)
+    openGraph: {
+      title: `${project.title} — ${site.name}`,
+      description: project.shortDescription,
+      siteName: site.name,
+      url: `/portfolio/${slug}`,
+      type: "article",
+      images: [{ url: project.thumbnail, alt: project.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — ${site.name}`,
+      description: project.shortDescription,
+      images: [project.thumbnail],
+    },
   };
 }
 
